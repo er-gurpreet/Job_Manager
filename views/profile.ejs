@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Profile</title>
+  <!-- Add Bootstrap CSS link -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    /* Add custom CSS for shadow effect */
+    .card {
+      box-shadow: 0 4px 8px rgba(255, 111, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <div class="row">
+      <% clients.forEach((elem) => { %>
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title"><%= elem.firstName %> <%= elem.lastName %></h5>
+              <p class="card-text">Age: <%= elem.age %></p>
+              <p class="card-text">Job Title: <%= elem.jobTitle %></p>
+              <p class="card-text">Work Experience: <%= elem.experience %></p>
+              <p class="card-text">Task Assign: <%= elem.taskHistory %></p>
+              <p class="card-text">Status: <%= elem.status %></p>
+              <a class="text-decoration-none" href="/deleteClient/<%= elem._id %>">❌</a>
+              <a class="pencil text-decoration-none">✏️</a>
+              <form style="display: none;" class="mt-3 updateForm" action="/updateClient/<%= elem._id %>" method="post">
+                <div class="form-group">
+                  <select class="form-control" name="status" required>
+                    <option value="Unactive">Unactive</option>
+                    <option value="Active">Active</option>
+                  </select>
+                </div>
+                
+                <div class="form-group">
+                  <label for="weight">Job Title</label>
+                  <input type="text" class="form-control" id="weight" name="jobTitle" value="<%= elem.jobTitle %>" required>
+                </div>
+          
+               <div class="form-group">
+                <label for="medicalHistory">Task History</label>
+                <textarea class="form-control" id="medicalHistory" name="taskHistory" rows="4" required><%= elem.taskHistory %></textarea>
+                </div> 
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>          
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+
+  <!-- Add Bootstrap JS and jQuery links -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    let updateForm = document.querySelector('.updateForm');
+    let pencil = document.querySelector('.pencil');
+    let flag = 0;
+    pencil.addEventListener("click",() =>{
+      if(flag === 0){
+        updateForm.style.display = "block";
+        flag = 1;
+      } else{        
+        updateForm.style.display = "none";
+        flag = 0;
+      }
+    })
+
+  </script>
+</body>
+</html>
